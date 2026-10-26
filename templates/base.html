@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gestão de Manutenção{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="topo">
+        <div class="marca">
+            <span class="marca-icone">GM</span>
+            <div>
+                <h1>Gestão de Manutenção</h1>
+                <p>Controle de equipamentos e serviços</p>
+            </div>
+        </div>
+    </header>
+
+    <nav class="menu">
+        <a href="{{ url_for('inicio') }}">Painel inicial</a>
+        <a href="{{ url_for('equipamentos.listar') }}">Equipamentos</a>
+        <a href="{{ url_for('tecnicos.listar') }}">Técnicos</a>
+        <a href="{{ url_for('manutencoes.listar') }}">Manutenções</a>
+        <a href="{{ url_for('relatorios.listar') }}">Relatórios</a>
+    </nav>
+
+    <main class="conteudo">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="rodape">
+        Sistema acadêmico de Gestão de Manutenção
+    </footer>
+</body>
+</html>
