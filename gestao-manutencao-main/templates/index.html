@@ -1,0 +1,50 @@
+
+{% extends "base.html" %}
+
+{% block title %}Painel inicial | Gestão de Manutenção{% endblock %}
+
+{% block content %}
+<section class="boas-vindas">
+    <div>
+        <h2>Painel inicial</h2>
+        <p>Acompanhe os registros do sistema em um só lugar.</p>
+    </div>
+    <span class="status-conexao">● Oracle conectado</span>
+</section>
+
+<section class="indicadores">
+    <article class="cartao">
+        <span class="cartao-icone">EQ</span>
+        <p>Equipamentos cadastrados</p>
+        <strong>{{ equipamentos }}</strong>
+    </article>
+
+    <article class="cartao">
+        <span class="cartao-icone">TC</span>
+        <p>Técnicos cadastrados</p>
+        <strong>{{ tecnicos }}</strong>
+    </article>
+
+    <article class="cartao">
+        <span class="cartao-icone">MT</span>
+        <p>Manutenções registradas</p>
+        <strong>{{ manutencoes }}</strong>
+    </article>
+</section>
+
+<section class="secao-inicial equipe-projeto">
+    <h3>Equipe do projeto</h3>
+    <p>
+        Projeto acadêmico desenvolvido para a disciplina de
+        Banco de Dados da FAESA.
+    </p>
+
+    <ul>
+        <li>Aymar Antônio Silva</li>
+        <li>Christopher Soares Nascimento</li>
+        <li>Lara Gabrielly da Conceição</li>
+        <li>Nathan Lacerda do Nascimento</li>
+        <li>Valdineide Schunk</li>
+    </ul>
+</section>
+{% endblock %}
