@@ -1,29 +1,39 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Gestão de Manutenção{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
     <header class="topo">
         <div class="marca">
             <span class="marca-icone">GM</span>
+
             <div>
                 <h1>Gestão de Manutenção</h1>
                 <p>Controle de equipamentos e serviços</p>
             </div>
         </div>
+
+        <div class="informacoes-academicas">
+            <strong>FAESA | 2026/2</strong>
+            <span>Disciplina: Banco de Dados</span>
+            <span>Professor: Howard Roatti</span>
+        </div>
     </header>
 
     <nav class="menu">
         <a href="{{ url_for('inicio') }}">Painel inicial</a>
-        <a href="{{ url_for('equipamentos.listar') }}">Equipamentos</a>
-        <a href="{{ url_for('tecnicos.listar') }}">Técnicos</a>
-        <a href="{{ url_for('manutencoes.listar') }}">Manutenções</a>
         <a href="{{ url_for('relatorios.listar') }}">Relatórios</a>
+        <a href="{{ url_for('inserir') }}">Inserir registros</a>
+        <a href="{{ url_for('remover') }}">Remover registros</a>
+        <a href="{{ url_for('atualizar') }}">Atualizar registros</a>
+        <a href="{{ url_for('sair') }}">Sair</a>
     </nav>
 
     <main class="conteudo">
@@ -34,4 +44,5 @@
         Sistema acadêmico de Gestão de Manutenção
     </footer>
 </body>
+
 </html>

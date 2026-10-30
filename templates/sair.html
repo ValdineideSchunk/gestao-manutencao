@@ -1,0 +1,28 @@
+
+{% extends "base.html" %}
+
+{% block title %}Saída do sistema | Gestão de Manutenção{% endblock %}
+
+{% block content %}
+
+<section class="boas-vindas">
+    <div>
+        <h2>Você saiu do sistema!</h2>
+        <p>Obrigado por utilizar o Gestão de Manutenção.</p>
+    </div>
+
+    <span class="status-conexao">Sessão encerrada</span>
+</section>
+
+<section class="secao-inicial">
+    <h3>Deseja acessar o sistema novamente?</h3>
+
+    <div class="acoes-formulario">
+        <a href="{{ url_for('inicio') }}"
+           class="botao primario">
+            Voltar ao painel inicial
+        </a>
+    </div>
+</section>
+
+{% endblock %}

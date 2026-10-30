@@ -1,0 +1,81 @@
+
+{% extends "base.html" %}
+
+{% block title %}Remover técnicos | Gestão de Manutenção{% endblock %}
+
+{% block content %}
+
+<section class="boas-vindas">
+    <div>
+        <h2>Remover técnicos</h2>
+        <p>Selecione o técnico que deseja excluir.</p>
+    </div>
+</section>
+
+<section class="secao-inicial">
+
+    {# EXIBIR MENSAGENS DO SISTEMA #}
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+        {% if mensagens %}
+            {% for categoria, mensagem in mensagens %}
+                <div class="mensagem {{ categoria }}">
+                    {{ mensagem }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if tecnicos %}
+
+        <div class="tabela-responsiva">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Especialidade</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for tecnico in tecnicos %}
+                    <tr>
+                        <td>{{ tecnico[0] }}</td>
+                        <td>{{ tecnico[1] }}</td>
+                        <td>{{ tecnico[2] }}</td>
+                        <td>
+                            <form method="POST"
+                                  action="{{ url_for('tecnicos.excluir', id_tecnico=tecnico[0]) }}"
+                                  onsubmit="return confirm('Confirma a exclusão deste técnico?');">
+
+                                <button type="submit"
+                                        class="botao perigo pequeno">
+                                    Excluir
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+
+        <p class="texto-vazio">
+            Não existem técnicos cadastrados para remover.
+        </p>
+
+    {% endif %}
+
+    <div class="acoes-formulario">
+        <a href="{{ url_for('remover') }}"
+           class="botao secundario">
+            Voltar
+        </a>
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+
+{% extends "base.html" %}
+
+{% block title %}Manutenção excluída | Gestão de Manutenção{% endblock %}
+
+{% block content %}
+
+<section class="boas-vindas">
+    <div>
+        <h2>Manutenção excluída com sucesso!</h2>
+        <p>O registro foi removido do banco de dados.</p>
+    </div>
+
+    <span class="status-conexao">Exclusão concluída</span>
+</section>
+
+<section class="secao-inicial">
+    <h3>Deseja excluir outra manutenção?</h3>
+
+    <div class="acoes-formulario">
+        <a href="{{ url_for('manutencoes.remover_lista') }}"
+           class="botao primario">
+            Sim, excluir outra
+        </a>
+
+        <a href="{{ url_for('inicio') }}"
+           class="botao secundario">
+            Não, voltar ao menu principal
+        </a>
+    </div>
+</section>
+
+{% endblock %}
+

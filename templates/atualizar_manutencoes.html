@@ -1,0 +1,72 @@
+
+{% extends "base.html" %}
+
+{% block title %}Atualizar manutenções | Gestão de Manutenção{% endblock %}
+
+{% block content %}
+
+<section class="boas-vindas">
+    <div>
+        <h2>Atualizar manutenções</h2>
+        <p>Selecione a manutenção que deseja modificar.</p>
+    </div>
+</section>
+
+<section class="cartao">
+
+    {% if manutencoes %}
+
+        <div class="tabela-responsiva">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Equipamento</th>
+                        <th>Técnico</th>
+                        <th>Data</th>
+                        <th>Descrição</th>
+                        <th>Custo</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for manutencao in manutencoes %}
+                    <tr>
+                        <td>{{ manutencao[0] }}</td>
+                        <td>{{ manutencao[2] }}</td>
+                        <td>{{ manutencao[4] }}</td>
+                        <td>{{ manutencao[5].strftime('%d/%m/%Y') }}</td>
+                        <td>{{ manutencao[6] }}</td>
+                        <td>R$ {{ "%.2f"|format(manutencao[7])|replace(".", ",") }}</td>
+
+                        <td>
+                            <a
+                                class="botao primario"
+                                href="{{ url_for(
+                                    'manutencoes.editar',
+                                    id_manutencao=manutencao[0]
+                                ) }}"
+                            >
+                                Selecionar
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+
+        <p>Nenhuma manutenção cadastrada.</p>
+
+    {% endif %}
+
+    <a class="botao secundario" href="{{ url_for('atualizar') }}">
+        Voltar
+    </a>
+
+</section>
+
+{% endblock %}

@@ -1,4 +1,3 @@
-
 # Gestão de Manutenção
 
 Sistema acadêmico para gerenciamento de equipamentos, técnicos e manutenções, desenvolvido para a disciplina de Banco de Dados da FAESA.
@@ -45,10 +44,8 @@ Sistema acadêmico para gerenciamento de equipamentos, técnicos e manutenções
 
 Em um terminal, execute:
 
-```bash
 cd ~/database_services
 docker compose up -d oracle
-```
 
 Aguarde o banco estar pronto para receber conexões.
 
@@ -56,59 +53,61 @@ Aguarde o banco estar pronto para receber conexões.
 
 Em outro terminal, execute:
 
-```bash
 cd ~/gestao-manutencao
-```
 
-### 3. Ativar o ambiente virtual
+### 3. Criar e ativar o ambiente virtual
 
-```bash
+Caso ainda não exista um ambiente virtual:
+
+python3 -m venv .venv
+
+Ative o ambiente virtual:
+
 source .venv/bin/activate
-```
 
-### 4. Configurar a senha do banco
+### 4. Instalar as dependências
 
-Defina a variável de ambiente `ORACLE_PASSWORD` com a senha configurada para o usuário Oracle utilizado pela aplicação.
+Com o ambiente virtual ativado, execute:
 
-```bash
+pip install -r requirements.txt
+
+### 5. Configurar a senha do banco
+
+Defina a variável de ambiente `ORACLE_PASSWORD` com a senha configurada para o usuário Oracle utilizado pela aplicação:
+
 export ORACLE_PASSWORD='lab@Database2025'
-```
 
-### 5. Verificar a conexão
+### 6. Verificar a conexão
 
-```bash
+Execute:
+
 python teste_config.py
-```
 
 O resultado esperado é:
 
-```text
 Conexao OK
-```
 
-### 6. Criar as tabelas, se necessário
+### 7. Criar as tabelas, se necessário
 
 Em um banco novo, com o usuário e as permissões adequados, execute:
 
-```bash
 python executar_sql.py
-```
 
 **Atenção:** não execute esse comando novamente em um banco onde as tabelas já existem. O script cria as tabelas e não foi desenvolvido para recriá-las automaticamente.
 
-### 7. Iniciar a aplicação
+### 8. Iniciar a aplicação
 
-```bash
+Execute:
+
 python app.py
-```
 
 Mantenha o terminal aberto enquanto utilizar o sistema.
 
-### 8. Acessar no navegador
+### 9. Acessar no navegador
 
 Abra:
 
-http://127.0.0.1:5000
+[http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 ## Telas disponíveis
 
@@ -122,11 +121,11 @@ http://127.0.0.1:5000
 
 ### Custo de manutenção por equipamento
 
-Apresenta a quantidade de manutenções e o custo total acumulado por equipamento, utilizando funções agregadas e agrupamento SQL.
+Apresenta a quantidade de manutenções e o custo total acumulado por equipamento, utilizando funções agregadas e agrupamento SQL (`GROUP BY`).
 
 ### Histórico detalhado de manutenções
 
-Apresenta data, equipamento, técnico responsável, descrição e custo, utilizando junção entre tabelas.
+Apresenta data, equipamento, técnico responsável, descrição e custo, utilizando junção entre tabelas (`JOIN`).
 
 ## Banco de dados
 
@@ -134,10 +133,24 @@ O projeto utiliza o Oracle Database XE 21c.
 
 O script `sql/criar_tabelas.sql` cria as tabelas `EQUIPAMENTO`, `TECNICO` e `MANUTENCAO`, incluindo chaves primárias, chaves estrangeiras e restrições de integridade.
 
+Relacionamentos:
+
+- Um equipamento pode possuir várias manutenções.
+- Um técnico pode ser responsável por várias manutenções.
+- Cada manutenção está vinculada a um equipamento e a um técnico.
+
 ## Trabalho acadêmico
 
 - **Disciplina:** Banco de Dados
 - **Instituição:** FAESA
 - **Professor:** Howard Roatti
+
+### Integrantes
+
+- Aymar Antônio Silva
+- Christopher Soares Nascimento
+- Lara Gabrielly da Conceição
+- Nathan Lacerda do Nascimento
+- Valdineide Schunk
 
 Projeto desenvolvido para fins acadêmicos.

@@ -1,0 +1,33 @@
+
+{% extends "base.html" %}
+
+{% block title %}Equipamento cadastrado | Gestão de Manutenção{% endblock %}
+
+{% block content %}
+
+<section class="boas-vindas">
+    <div>
+        <h2>Equipamento cadastrado com sucesso!</h2>
+        <p>O registro foi salvo no banco de dados.</p>
+    </div>
+
+    <span class="status-conexao">Cadastro concluído</span>
+</section>
+
+<section class="secao-inicial">
+    <h3>Deseja cadastrar outro equipamento?</h3>
+
+    <div class="acoes-formulario">
+        <a href="{{ url_for('equipamentos.listar') }}"
+           class="botao primario">
+            Sim, cadastrar outro
+        </a>
+
+        <a href="{{ url_for('inicio') }}"
+           class="botao secundario">
+            Não, voltar ao menu principal
+        </a>
+    </div>
+</section>
+
+{% endblock %}

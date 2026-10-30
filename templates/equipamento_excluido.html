@@ -1,0 +1,33 @@
+
+{% extends "base.html" %}
+
+{% block title %}Equipamento excluído | Gestão de Manutenção{% endblock %}
+
+{% block content %}
+
+<section class="boas-vindas">
+    <div>
+        <h2>Equipamento excluído com sucesso!</h2>
+        <p>O registro foi removido do banco de dados.</p>
+    </div>
+
+    <span class="status-conexao">Exclusão concluída</span>
+</section>
+
+<section class="secao-inicial">
+    <h3>Deseja excluir outro equipamento?</h3>
+
+    <div class="acoes-formulario">
+        <a href="{{ url_for('equipamentos.remover_lista') }}"
+           class="botao primario">
+            Sim, excluir outro
+        </a>
+
+        <a href="{{ url_for('inicio') }}"
+           class="botao secundario">
+            Não, voltar ao menu principal
+        </a>
+    </div>
+</section>
+
+{% endblock %}

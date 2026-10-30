@@ -1,0 +1,63 @@
+
+{% extends "base.html" %}
+
+{% block title %}Equipamento atualizado | Gestão de Manutenção{% endblock %}
+
+{% block content %}
+
+<section class="boas-vindas">
+    <div>
+        <h2>Equipamento atualizado com sucesso!</h2>
+        <p>Confira os dados atualizados do equipamento.</p>
+    </div>
+
+    <span class="status-conexao">Atualização concluída</span>
+</section>
+
+<section class="secao-inicial">
+
+    <h3>Dados do equipamento</h3>
+
+    <div class="tabela-responsiva">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Modelo</th>
+                    <th>Número de série</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>{{ equipamento[0] }}</td>
+                    <td>{{ equipamento[1] }}</td>
+                    <td>{{ equipamento[2] }}</td>
+                    <td>{{ equipamento[3] }}</td>
+                    <td>{{ equipamento[4] }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-top: 25px;">
+        <h3>Deseja atualizar outro equipamento?</h3>
+
+        <div class="acoes-formulario">
+            <a href="{{ url_for('equipamentos.atualizar_lista') }}"
+               class="botao primario">
+                Sim, atualizar outro
+            </a>
+
+            <a href="{{ url_for('inicio') }}"
+               class="botao secundario">
+                Não, voltar ao menu principal
+            </a>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

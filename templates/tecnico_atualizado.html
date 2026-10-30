@@ -1,0 +1,57 @@
+
+{% extends "base.html" %}
+
+{% block title %}Técnico atualizado | Gestão de Manutenção{% endblock %}
+
+{% block content %}
+
+<section class="boas-vindas">
+    <div>
+        <h2>Técnico atualizado com sucesso!</h2>
+        <p>Confira os dados atualizados do técnico.</p>
+    </div>
+
+    <span class="status-conexao">Atualização concluída</span>
+</section>
+
+<section class="secao-inicial">
+    <h3>Dados do técnico</h3>
+
+    <div class="tabela-responsiva">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Especialidade</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>{{ tecnico[0] }}</td>
+                    <td>{{ tecnico[1] }}</td>
+                    <td>{{ tecnico[2] }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-top: 25px;">
+        <h3>Deseja atualizar outro técnico?</h3>
+
+        <div class="acoes-formulario">
+            <a href="{{ url_for('tecnicos.atualizar_lista') }}"
+               class="botao primario">
+                Sim, atualizar outro
+            </a>
+
+            <a href="{{ url_for('inicio') }}"
+               class="botao secundario">
+                Não, voltar ao menu principal
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

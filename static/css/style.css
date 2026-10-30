@@ -14,6 +14,25 @@ body {
     padding: 22px 5%;
     background: #17263c;
     color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.informacoes-academicas {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+    font-size: 13px;
+    color: #cbd5e1;
+}
+
+.informacoes-academicas strong {
+    color: white;
+    font-size: 15px;
 }
 
 .marca {
@@ -329,5 +348,16 @@ th {
 
     .acoes-formulario {
         grid-column: auto;
+    }
+}
+@media (max-width: 600px) {
+    .topo {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .informacoes-academicas {
+        align-items: flex-start;
+        margin-left: 66px;
     }
 }

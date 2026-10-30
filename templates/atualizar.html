@@ -1,0 +1,46 @@
+
+{% extends "base.html" %}
+
+{% block title %}Atualizar registros | Gestão de Manutenção{% endblock %}
+
+{% block content %}
+
+<section class="boas-vindas">
+    <div>
+        <h2>Atualizar registros</h2>
+        <p>Selecione o tipo de registro que deseja atualizar.</p>
+    </div>
+</section>
+
+<section class="indicadores">
+
+    <article class="cartao">
+        <span class="cartao-icone">EQ</span>
+        <p>Atualizar equipamentos</p>
+        <a class="botao primario"
+           href="{{ url_for('equipamentos.atualizar_lista') }}">
+            Selecionar
+        </a>
+    </article>
+
+    <article class="cartao">
+        <span class="cartao-icone">TC</span>
+        <p>Atualizar técnicos</p>
+        <a class="botao primario"
+           href="{{ url_for('tecnicos.atualizar_lista') }}">
+            Selecionar
+        </a>
+    </article>
+
+    <article class="cartao">
+        <span class="cartao-icone">MT</span>
+        <p>Atualizar manutenções</p>
+        <a class="botao primario"
+           href="{{ url_for('manutencoes.atualizar_lista') }}">
+            Selecionar
+        </a>
+    </article>
+
+</section>
+
+{% endblock %}

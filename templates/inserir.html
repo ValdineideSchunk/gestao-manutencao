@@ -1,0 +1,46 @@
+
+{% extends "base.html" %}
+
+{% block title %}Inserir registros | Gestão de Manutenção{% endblock %}
+
+{% block content %}
+
+<section class="boas-vindas">
+    <div>
+        <h2>Inserir registros</h2>
+        <p>Selecione o tipo de registro que deseja cadastrar.</p>
+    </div>
+</section>
+
+<section class="indicadores">
+
+    <article class="cartao">
+        <span class="cartao-icone">EQ</span>
+        <p>Cadastro de equipamentos</p>
+        <a class="botao primario"
+           href="{{ url_for('equipamentos.listar') }}">
+            Selecionar
+        </a>
+    </article>
+
+    <article class="cartao">
+        <span class="cartao-icone">TC</span>
+        <p>Cadastro de técnicos</p>
+        <a class="botao primario"
+           href="{{ url_for('tecnicos.listar') }}">
+            Selecionar
+        </a>
+    </article>
+
+    <article class="cartao">
+        <span class="cartao-icone">MT</span>
+        <p>Cadastro de manutenções</p>
+        <a class="botao primario"
+           href="{{ url_for('manutencoes.listar') }}">
+            Selecionar
+        </a>
+    </article>
+
+</section>
+
+{% endblock %}

@@ -19,6 +19,7 @@ from models.equipamento import (
 equipamento_bp = Blueprint("equipamentos", __name__)
 
 
+# LISTAR EQUIPAMENTOS
 @equipamento_bp.route("/equipamentos")
 def listar():
     equipamentos = listar_equipamentos()
@@ -30,6 +31,29 @@ def listar():
     )
 
 
+# LISTAR EQUIPAMENTOS PARA REMOÇÃO
+@equipamento_bp.route("/equipamentos/remover")
+def remover_lista():
+    equipamentos = listar_equipamentos()
+
+    return render_template(
+        "remover_equipamentos.html",
+        equipamentos=equipamentos
+    )
+
+
+# LISTAR EQUIPAMENTOS PARA ATUALIZAÇÃO
+@equipamento_bp.route("/equipamentos/atualizar")
+def atualizar_lista():
+    equipamentos = listar_equipamentos()
+
+    return render_template(
+        "atualizar_equipamentos.html",
+        equipamentos=equipamentos
+    )
+
+
+# CADASTRAR OU ATUALIZAR EQUIPAMENTO
 @equipamento_bp.route("/equipamentos/salvar", methods=["POST"])
 def salvar():
     id_equipamento = request.form.get("id_equipamento", "").strip()
@@ -48,8 +72,10 @@ def salvar():
 
     try:
         if id_equipamento:
+            id_equipamento = int(id_equipamento)
+
             alterados = atualizar_equipamento(
-                int(id_equipamento),
+                id_equipamento,
                 nome,
                 modelo,
                 numero_serie,
@@ -57,9 +83,15 @@ def salvar():
             )
 
             if alterados:
-                flash("Equipamento atualizado com sucesso!", "sucesso")
+                return redirect(
+                    url_for(
+                        "equipamentos.atualizacao_concluida",
+                        id_equipamento=id_equipamento
+                    )
+                )
             else:
                 flash("Equipamento não encontrado.", "erro")
+
         else:
             cadastrar_equipamento(
                 nome,
@@ -67,10 +99,14 @@ def salvar():
                 numero_serie,
                 status
             )
-            flash("Equipamento cadastrado com sucesso!", "sucesso")
+
+            return redirect(
+                url_for("equipamentos.cadastro_concluido")
+            )
 
     except Exception as erro:
         print("ERRO AO SALVAR EQUIPAMENTO:", repr(erro))
+
         if "ORA-00001" in str(erro):
             flash("Esse número de série já está cadastrado.", "erro")
         else:
@@ -79,6 +115,13 @@ def salvar():
     return redirect(url_for("equipamentos.listar"))
 
 
+# TELA DE CONFIRMAÇÃO DO CADASTRO
+@equipamento_bp.route("/equipamentos/cadastro-concluido")
+def cadastro_concluido():
+    return render_template("equipamento_cadastrado.html")
+
+
+# EDITAR EQUIPAMENTO
 @equipamento_bp.route("/equipamentos/editar/<int:id_equipamento>")
 def editar(id_equipamento):
     equipamento = buscar_equipamento(id_equipamento)
@@ -96,6 +139,30 @@ def editar(id_equipamento):
     )
 
 
+# EXIBIR EQUIPAMENTO APÓS ATUALIZAÇÃO
+@equipamento_bp.route(
+    "/equipamentos/atualizacao-concluida/<int:id_equipamento>"
+)
+def atualizacao_concluida(id_equipamento):
+    equipamento = buscar_equipamento(id_equipamento)
+
+    if equipamento is None:
+        flash("Equipamento não encontrado.", "erro")
+        return redirect(url_for("equipamentos.atualizar_lista"))
+
+    return render_template(
+        "equipamento_atualizado.html",
+        equipamento=equipamento
+    )
+
+
+# TELA DE CONFIRMAÇÃO DA EXCLUSÃO
+@equipamento_bp.route("/equipamentos/exclusao-concluida")
+def exclusao_concluida():
+    return render_template("equipamento_excluido.html")
+
+
+# EXCLUIR EQUIPAMENTO
 @equipamento_bp.route(
     "/equipamentos/excluir/<int:id_equipamento>",
     methods=["POST"]
@@ -105,11 +172,15 @@ def excluir(id_equipamento):
         excluidos = excluir_equipamento(id_equipamento)
 
         if excluidos:
-            flash("Equipamento excluído com sucesso!", "sucesso")
+            return redirect(
+                url_for("equipamentos.exclusao_concluida")
+            )
         else:
             flash("Equipamento não encontrado.", "erro")
 
     except Exception as erro:
+        print("ERRO AO EXCLUIR EQUIPAMENTO:", repr(erro))
+
         if "ORA-02292" in str(erro):
             flash(
                 "Não é possível excluir este equipamento porque "
@@ -119,4 +190,4 @@ def excluir(id_equipamento):
         else:
             flash("Não foi possível excluir o equipamento.", "erro")
 
-    return redirect(url_for("equipamentos.listar"))
+    return redirect(url_for("equipamentos.remover_lista"))

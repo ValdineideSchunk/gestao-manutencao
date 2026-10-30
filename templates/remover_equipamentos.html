@@ -1,0 +1,85 @@
+
+{% extends "base.html" %}
+
+{% block title %}Remover equipamentos | Gestão de Manutenção{% endblock %}
+
+{% block content %}
+
+<section class="boas-vindas">
+    <div>
+        <h2>Remover equipamentos</h2>
+        <p>Selecione o equipamento que deseja excluir.</p>
+    </div>
+</section>
+
+<section class="secao-inicial">
+
+    {# EXIBIR MENSAGENS DO SISTEMA #}
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+        {% if mensagens %}
+            {% for categoria, mensagem in mensagens %}
+                <div class="mensagem {{ categoria }}">
+                    {{ mensagem }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if equipamentos %}
+
+        <div class="tabela-responsiva">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Modelo</th>
+                        <th>Número de série</th>
+                        <th>Status</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for equipamento in equipamentos %}
+                    <tr>
+                        <td>{{ equipamento[0] }}</td>
+                        <td>{{ equipamento[1] }}</td>
+                        <td>{{ equipamento[2] }}</td>
+                        <td>{{ equipamento[3] }}</td>
+                        <td>{{ equipamento[4] }}</td>
+                        <td>
+                            <form method="POST"
+                                  action="{{ url_for('equipamentos.excluir', id_equipamento=equipamento[0]) }}"
+                                  onsubmit="return confirm('Confirma a exclusão deste equipamento?');">
+
+                                <button type="submit"
+                                        class="botao perigo pequeno">
+                                    Excluir
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+
+        <p class="texto-vazio">
+            Não existem equipamentos cadastrados para remover.
+        </p>
+
+    {% endif %}
+
+    <div class="acoes-formulario">
+        <a href="{{ url_for('remover') }}"
+           class="botao secundario">
+            Voltar
+        </a>
+    </div>
+
+</section>
+
+{% endblock %}

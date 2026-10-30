@@ -1,0 +1,63 @@
+
+{% extends "base.html" %}
+
+{% block title %}Manutenção atualizada | Gestão de Manutenção{% endblock %}
+
+{% block content %}
+
+<section class="boas-vindas">
+    <div>
+        <h2>Manutenção atualizada com sucesso!</h2>
+        <p>Confira os dados atualizados da manutenção.</p>
+    </div>
+
+    <span class="status-conexao">Atualização concluída</span>
+</section>
+
+<section class="secao-inicial">
+    <h3>Dados da manutenção</h3>
+
+    <div class="tabela-responsiva">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Equipamento</th>
+                    <th>Técnico responsável</th>
+                    <th>Data</th>
+                    <th>Descrição</th>
+                    <th>Custo</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>{{ manutencao[0] }}</td>
+                    <td>{{ manutencao[2] }}</td>
+                    <td>{{ manutencao[4] }}</td>
+                    <td>{{ manutencao[5].strftime('%d/%m/%Y') }}</td>
+                    <td>{{ manutencao[6] }}</td>
+                    <td>R$ {{ "%.2f"|format(manutencao[7]|float) }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-top: 25px;">
+        <h3>Deseja atualizar outra manutenção?</h3>
+
+        <div class="acoes-formulario">
+            <a href="{{ url_for('manutencoes.atualizar_lista') }}"
+               class="botao primario">
+                Sim, atualizar outra
+            </a>
+
+            <a href="{{ url_for('inicio') }}"
+               class="botao secundario">
+                Não, voltar ao menu principal
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

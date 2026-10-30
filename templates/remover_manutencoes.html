@@ -1,0 +1,87 @@
+
+{% extends "base.html" %}
+
+{% block title %}Remover manutenções | Gestão de Manutenção{% endblock %}
+
+{% block content %}
+
+<section class="boas-vindas">
+    <div>
+        <h2>Remover manutenções</h2>
+        <p>Selecione a manutenção que deseja excluir.</p>
+    </div>
+</section>
+
+<section class="secao-inicial">
+
+    {# EXIBIR MENSAGENS DO SISTEMA #}
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+        {% if mensagens %}
+            {% for categoria, mensagem in mensagens %}
+                <div class="mensagem {{ categoria }}">
+                    {{ mensagem }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if manutencoes %}
+
+        <div class="tabela-responsiva">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Equipamento</th>
+                        <th>Técnico</th>
+                        <th>Data</th>
+                        <th>Descrição</th>
+                        <th>Custo</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for manutencao in manutencoes %}
+                    <tr>
+                        <td>{{ manutencao[0] }}</td>
+                        <td>{{ manutencao[2] }}</td>
+                        <td>{{ manutencao[4] }}</td>
+                        <td>{{ manutencao[5].strftime('%d/%m/%Y') }}</td>
+                        <td>{{ manutencao[6] }}</td>
+                        <td>R$ {{ "%.2f"|format(manutencao[7]|float) }}</td>
+                        <td>
+                            <form method="POST"
+                                  action="{{ url_for('manutencoes.excluir', id_manutencao=manutencao[0]) }}"
+                                  onsubmit="return confirm('Confirma a exclusão desta manutenção?');">
+
+                                <button type="submit"
+                                        class="botao perigo pequeno">
+                                    Excluir
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+
+        <p class="texto-vazio">
+            Não existem manutenções cadastradas para remover.
+        </p>
+
+    {% endif %}
+
+    <div class="acoes-formulario">
+        <a href="{{ url_for('remover') }}"
+           class="botao secundario">
+            Voltar
+        </a>
+    </div>
+
+</section>
+
+{% endblock %}

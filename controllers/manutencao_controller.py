@@ -18,6 +18,7 @@ from models.tecnico import listar_tecnicos
 manutencao_bp = Blueprint("manutencoes", __name__)
 
 
+# LISTAR MANUTENÇÕES
 @manutencao_bp.route("/manutencoes")
 def listar():
     return render_template(
@@ -29,6 +30,29 @@ def listar():
     )
 
 
+# LISTAR MANUTENÇÕES PARA ATUALIZAÇÃO
+@manutencao_bp.route("/manutencoes/atualizar")
+def atualizar_lista():
+    manutencoes = listar_manutencoes()
+
+    return render_template(
+        "atualizar_manutencoes.html",
+        manutencoes=manutencoes
+    )
+
+
+# LISTAR MANUTENÇÕES PARA REMOÇÃO
+@manutencao_bp.route("/manutencoes/remover")
+def remover_lista():
+    manutencoes = listar_manutencoes()
+
+    return render_template(
+        "remover_manutencoes.html",
+        manutencoes=manutencoes
+    )
+
+
+# CADASTRAR OU ATUALIZAR MANUTENÇÃO
 @manutencao_bp.route("/manutencoes/salvar", methods=["POST"])
 def salvar():
     id_manutencao = request.form.get("id_manutencao", "").strip()
@@ -59,8 +83,10 @@ def salvar():
         date.fromisoformat(data_manutencao)
 
         if id_manutencao:
+            id_manutencao = int(id_manutencao)
+
             alterados = atualizar_manutencao(
-                int(id_manutencao),
+                id_manutencao,
                 id_equipamento,
                 id_tecnico,
                 data_manutencao,
@@ -69,9 +95,15 @@ def salvar():
             )
 
             if alterados:
-                flash("Manutenção atualizada com sucesso!", "sucesso")
+                return redirect(
+                    url_for(
+                        "manutencoes.atualizacao_concluida",
+                        id_manutencao=id_manutencao
+                    )
+                )
             else:
                 flash("Manutenção não encontrada.", "erro")
+
         else:
             cadastrar_manutencao(
                 id_equipamento,
@@ -80,10 +112,14 @@ def salvar():
                 descricao,
                 custo
             )
-            flash("Manutenção cadastrada com sucesso!", "sucesso")
+
+            return redirect(
+                url_for("manutencoes.cadastro_concluido")
+            )
 
     except (ValueError, InvalidOperation):
         flash("Verifique os IDs, a data e o custo informados.", "erro")
+
     except Exception as erro:
         print("ERRO AO SALVAR MANUTENCAO:", repr(erro))
 
@@ -97,6 +133,40 @@ def salvar():
     return redirect(url_for("manutencoes.listar"))
 
 
+# TELA DE CONFIRMAÇÃO DO CADASTRO
+@manutencao_bp.route("/manutencoes/cadastro-concluido")
+def cadastro_concluido():
+    return render_template("manutencao_cadastrada.html")
+
+
+# TELA DE CONFIRMAÇÃO DA ATUALIZAÇÃO
+@manutencao_bp.route("/manutencoes/atualizacao-concluida/<int:id_manutencao>")
+def atualizacao_concluida(id_manutencao):
+    manutencao = buscar_manutencao(id_manutencao)
+
+    if manutencao is None:
+        flash("Manutenção não encontrada.", "erro")
+        return redirect(url_for("manutencoes.atualizar_lista"))
+
+    # Busca os dados completos, incluindo os nomes do equipamento e técnico
+    manutencoes = listar_manutencoes()
+
+    manutencao_completa = next(
+        (item for item in manutencoes if item[0] == id_manutencao),
+        None
+    )
+
+    if manutencao_completa is None:
+        flash("Não foi possível localizar os dados da manutenção.", "erro")
+        return redirect(url_for("manutencoes.atualizar_lista"))
+
+    return render_template(
+        "manutencao_atualizada.html",
+        manutencao=manutencao_completa
+    )
+
+
+# EDITAR MANUTENÇÃO
 @manutencao_bp.route("/manutencoes/editar/<int:id_manutencao>")
 def editar(id_manutencao):
     manutencao = buscar_manutencao(id_manutencao)
@@ -114,6 +184,13 @@ def editar(id_manutencao):
     )
 
 
+# TELA DE CONFIRMAÇÃO DA EXCLUSÃO
+@manutencao_bp.route("/manutencoes/exclusao-concluida")
+def exclusao_concluida():
+    return render_template("manutencao_excluida.html")
+
+
+# EXCLUIR MANUTENÇÃO
 @manutencao_bp.route(
     "/manutencoes/excluir/<int:id_manutencao>",
     methods=["POST"]
@@ -123,7 +200,9 @@ def excluir(id_manutencao):
         excluidas = excluir_manutencao(id_manutencao)
 
         if excluidas:
-            flash("Manutenção excluída com sucesso!", "sucesso")
+            return redirect(
+                url_for("manutencoes.exclusao_concluida")
+            )
         else:
             flash("Manutenção não encontrada.", "erro")
 
@@ -131,4 +210,4 @@ def excluir(id_manutencao):
         print("ERRO AO EXCLUIR MANUTENCAO:", repr(erro))
         flash("Não foi possível excluir a manutenção.", "erro")
 
-    return redirect(url_for("manutencoes.listar"))
+    return redirect(url_for("manutencoes.remover_lista"))

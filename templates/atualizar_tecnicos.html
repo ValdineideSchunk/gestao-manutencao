@@ -1,0 +1,59 @@
+
+{% extends "base.html" %}
+
+{% block title %}Atualizar técnicos | Gestão de Manutenção{% endblock %}
+
+{% block content %}
+
+<section class="boas-vindas">
+    <div>
+        <h2>Atualizar técnicos</h2>
+        <p>Selecione o técnico que deseja modificar.</p>
+    </div>
+</section>
+
+<section class="cartao">
+    {% if tecnicos %}
+        <div class="tabela-responsiva">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Especialidade</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for tecnico in tecnicos %}
+                    <tr>
+                        <td>{{ tecnico[0] }}</td>
+                        <td>{{ tecnico[1] }}</td>
+                        <td>{{ tecnico[2] }}</td>
+                        <td>
+                            <a
+                                class="botao primario"
+                                href="{{ url_for(
+                                    'tecnicos.editar',
+                                    id_tecnico=tecnico[0]
+                                ) }}"
+                            >
+                                Selecionar
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>Nenhum técnico cadastrado.</p>
+    {% endif %}
+
+    <a class="botao secundario" href="{{ url_for('atualizar') }}">
+        Voltar
+    </a>
+</section>
+
+{% endblock %}
