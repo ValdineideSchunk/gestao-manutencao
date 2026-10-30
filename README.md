@@ -139,6 +139,14 @@ Relacionamentos:
 - Um técnico pode ser responsável por várias manutenções.
 - Cada manutenção está vinculada a um equipamento e a um técnico.
 
+## Vídeo de demonstração
+
+A demonstração do sistema Gestão de Manutenção está disponível no YouTube.
+
+**Assista à apresentação:** [Vídeo de demonstração do sistema](https://youtu.be/S5Q_U3FrOrE)
+
+O vídeo apresenta o objetivo do projeto e demonstra passo a passo as funcionalidades da aplicação, incluindo cadastros, consultas, atualizações, exclusões e relatórios.
+
 ## Trabalho acadêmico
 
 - **Disciplina:** Banco de Dados
